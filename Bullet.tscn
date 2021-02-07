@@ -1,10 +1,10 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://icon.png" type="Texture" id=1]
+[ext_resource path="res://bullet.png" type="Texture" id=1]
 [ext_resource path="res://Bullet.gd" type="Script" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 10.0565, 7.93902 )
+extents = Vector2( 3.15788, 5.09993 )
 
 [node name="Bullet" type="RigidBody2D"]
 collision_layer = 2
@@ -12,14 +12,17 @@ collision_mask = 2
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
-scale = Vector2( 0.1, 0.025 )
+position = Vector2( 2, 0 )
+rotation = 1.5708
 texture = ExtResource( 1 )
+centered = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 1, 0.5 )
 scale = Vector2( 0.318, 0.1 )
 shape = SubResource( 1 )
 
 [node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
-position = Vector2( -3.07566, 0.0274615 )
-scale = Vector2( 0.626527, 0.0800485 )
+position = Vector2( -3.076, 0.5 )
+scale = Vector2( 0.509, 0.052 )
 [connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]

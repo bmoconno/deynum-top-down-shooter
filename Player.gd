@@ -13,6 +13,11 @@ var FIRE_RATE = 0.2
 var BULLET_SPEED = 300
 # A reference to the Bullet scene, so we can make new instances of it
 var BULLET = preload("res://Bullet.tscn")
+# A reference to the GunBlast scene, so we can make new instances of it
+var GUN_BLAST = preload("res://GunBlast.tscn")
+# The AnimationPlayer node for Player, onready means it doesn't set this until 
+# Godot's built in _ready function runs for this Player node
+onready var ANIMATION_PLAYER = $AnimationPlayer
 
 #######################################
 # Variable - these values do change
@@ -32,6 +37,7 @@ func _process(delta):
 	if Input.is_action_pressed("left_mouse") && reloaded:
 		# ...shoot the gun
 		shoot()
+		#gunAnimatedSprite.play()
 
 # This function is built into Godot, it is called every physics frame
 func _physics_process(delta):
@@ -47,10 +53,12 @@ func _physics_process(delta):
 	# If the player isn't pressing any direction buttons...
 	if direction == Vector2.ZERO:
 		# ... apply friction to slow them down
-		apply_friction(ACCELERATION * delta)
+		apply_friction(acceleration)
 	else: # Otherwise...
 		# ... apply movement based on acceleration
-		apply_movement(direction * ACCELERATION * delta)
+		apply_movement(direction * acceleration)
+		# Since the Player is moving, turn on the move animation
+		ANIMATION_PLAYER.play("move")
 	
 	# Update the Player's motion using the move_and_slide function.
 	# Godot's built in move_and_slide function will cause the Player to slide
@@ -101,6 +109,8 @@ func apply_friction(deceleration):
 	else:# Otherwise...
 		# ... set their movement to zero, since we don't want to send them backwards
 		motion = Vector2.ZERO
+		# and set the Player's animation back to idle
+		ANIMATION_PLAYER.play("idle")
 
 # Apply acceleration to the player
 func apply_movement(acceleration):
@@ -132,6 +142,12 @@ func shoot():
 	# Use built in Godot functions to get the root of the scene tree, then add
 	# our new bullet instance to it.
 	get_tree().get_root().call_deferred("add_child", bullet)
+	# Play the GunBlast animation
+	var gunBlast = GUN_BLAST.instance()
+	# Set the position of the GunBlast animation to the position of the gun
+	gunBlast.position = $Gun.position
+	# Add the GunBlast animation to the Player node, so it sticks to the gun
+	add_child(gunBlast)
 	# Since the gun has just shot, it's no longer reloaded, so it can't shoot again
 	reloaded = false
 	# yield means nothing else happens until a condition has been met, for this
