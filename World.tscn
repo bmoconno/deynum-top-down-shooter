@@ -147,6 +147,11 @@ tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 65536, 0, 0, 65537
 [node name="Player" parent="YSort" instance=ExtResource( 1 )]
 position = Vector2( 149, 250 )
 
+[node name="Camera2D" type="Camera2D" parent="YSort/Player"]
+current = true
+limit_left = 0
+limit_right = 256
+
 [node name="Buildings" type="TileMap" parent="YSort"]
 tile_set = SubResource( 6 )
 cell_quadrant_size = 64
