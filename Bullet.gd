@@ -6,3 +6,9 @@ func _on_VisibilityNotifier2D_screen_exited():
 	# Godot's queue_free function... so we don't get slowdowns from having like
 	# 10000000000 bullets in memory
 	queue_free()
+
+
+func _on_Bullet_body_entered(body):
+	# Eventually we'll check here to see if it hit a bad guy or something
+	# The bullet hit something, remove it from memory
+	queue_free()

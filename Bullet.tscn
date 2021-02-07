@@ -7,8 +7,8 @@
 extents = Vector2( 3.15788, 5.09993 )
 
 [node name="Bullet" type="RigidBody2D"]
-collision_layer = 2
-collision_mask = 2
+contacts_reported = 1
+contact_monitor = true
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
@@ -25,4 +25,6 @@ shape = SubResource( 1 )
 [node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
 position = Vector2( -3.076, 0.5 )
 scale = Vector2( 0.509, 0.052 )
+[connection signal="body_entered" from="." to="." method="_on_Bullet_body_entered"]
+[connection signal="body_shape_entered" from="." to="." method="_on_Bullet_body_shape_entered"]
 [connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]

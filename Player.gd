@@ -139,9 +139,9 @@ func shoot():
 	# direction we want, then we rotate that by the Player's rotation so it comes
 	# out the right direction
 	bullet.apply_impulse(Vector2.ZERO, Vector2(BULLET_SPEED, 0).rotated(rotation))
-	# Use built in Godot functions to get the root of the scene tree, then add
+	# Use built in Godot functions to get the parent node (YSort), then add
 	# our new bullet instance to it.
-	get_tree().get_root().call_deferred("add_child", bullet)
+	get_parent().call_deferred("add_child", bullet)
 	# Play the GunBlast animation
 	var gunBlast = GUN_BLAST.instance()
 	# Set the position of the GunBlast animation to the position of the gun
