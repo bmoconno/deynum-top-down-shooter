@@ -1,8 +1,9 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://topdown-sprites.png" type="Texture" id=2]
 [ext_resource path="res://Enemy.tscn" type="PackedScene" id=3]
+[ext_resource path="res://EnemySpawner.tscn" type="PackedScene" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 10, 321.628 )
@@ -163,3 +164,6 @@ cell_tile_origin = 2
 cell_y_sort = true
 format = 1
 tile_data = PoolIntArray( 0, 0, 0, 3, 536870912, 0, 65536, 1, 0, 65539, 536870914, 0, 131072, 1, 0, 131075, 536870913, 0, 196608, 2, 0, 196611, 536870913, 0, 262144, 2, 0, 262147, 536870914, 0, 327680, 3, 0, 327683, 536870913, 0, 393216, 0, 0, 393219, 536870914, 0, 458752, 2, 0, 458755, 536870915, 0, 524288, 2, 0 )
+
+[node name="EnemySpawner" parent="." instance=ExtResource( 4 )]
+position = Vector2( 0, 64 )
