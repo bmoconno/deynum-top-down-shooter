@@ -1,47 +1,52 @@
 extends KinematicBody2D
+
 #######################################
 # Constants - these values don't change
 #######################################
 
-# Maximum speed the player can move
-const MAX_SPEED = 200
-# Acceleration for the player (also used for deceleration)
-const ACCELERATION = 2000
+# Maximum speed the enemy can move
+const MAX_SPEED = 100
+# Acceleration for the enemy (also used for deceleration)
+const ACCELERATION = 1500
 # The time, in seconds, between bullets being fired
-const FIRE_RATE = 0.2
+const FIRE_RATE = 0.6
 # How fast the bullet travels
-const BULLET_SPEED = 300
+const BULLET_SPEED = 150
 # A reference to the Bullet scene, so we can make new instances of it
 const BULLET = preload("res://Bullet.tscn")
 # A reference to the GunBlast scene, so we can make new instances of it
 const GUN_BLAST = preload("res://GunBlast.tscn")
-# The AnimationPlayer node for Player, onready means it doesn't set this until 
-# Godot's built in _ready function runs for this Player node
+# The AnimationPlayer node for Enemy, onready means it doesn't set this until 
+# Godot's built in _ready function runs for this Enemy node
 onready var ANIMATION_PLAYER = $AnimationPlayer
+# Once the Enemy is ready in the scene, set it's reference to the Player
+onready var PLAYER = get_parent().get_node('Player')
+# How close should the Enemy get to the Player
+const ATTACK_DISTANCE = 40
+# How close should the Player be before the Enemy sees the Player
+const SIGHT_DISTANCE = 100
+# The location of sprite sheets for Enemy units
+const SPRITE_SHEETS = ["res://enemy-1-sprites.png", "res://enemy-2-sprites.png", "res://enemy-3-sprites.png", "res://enemy-4-sprites.png"]
 
 #######################################
 # Variable - these values do change
 #######################################
 
-# A 2D vector for the direction/speed the player is currently moving
+# A 2D vector for the direction/speed the Enemy is currently moving
 var motion = Vector2()
 # Is the gun ready to fire?
 var reloaded = true
 
-# This function is built into Godot, it is called every frame
-func _process(delta):
-	# Point the Player node at the mouse pointer
-	look_at(get_global_mouse_position())
-	
-	# If the player presses the fire button and the gun is ready to shoot...
-	if Input.is_action_pressed("left_mouse") && reloaded:
-		# ...shoot the gun
-		shoot()
+# This function is buily into Godot, it is called when the Node is loaded into
+# the scene
+func _ready():
+	# Set the random sprite for this enemy
+	set_sprite()
 
 # This function is built into Godot, it is called every physics frame
 func _physics_process(delta):
-	# Get the direction the player is pressing
-	var direction = get_move_direction()
+	# See how far away the Enemy is from the Player
+	var distance = PLAYER.position - position
 	
 	# Figure out how much acceleration to apply, we do this by multiplying our 
 	# ACCELERATION constant by delta. The delta variable is given to us by Godot 
@@ -49,75 +54,59 @@ func _physics_process(delta):
 	# since the last time _physics_process was called.
 	var acceleration = ACCELERATION * delta
 	
-	# If the player isn't pressing any direction buttons...
-	if direction == Vector2.ZERO:
-		# ... apply friction to slow them down
-		apply_friction(acceleration)
-	else: # Otherwise...
-		# ... apply movement based on acceleration
-		apply_movement(direction * acceleration)
-		# Since the Player is moving, turn on the move animation
+	# If the Player is close enough to be seen and not too close to shoot at...
+	if distance.length() > ATTACK_DISTANCE && distance.length() < SIGHT_DISTANCE:
+		# ...move the Enemy toward the player
+		var direction = (PLAYER.position - position)
+		apply_movement(acceleration * distance)
+		# Since the Enemy is moving, turn on the move animation
 		ANIMATION_PLAYER.play("move")
+	else: # Otherwise...
+		# ... slow down the Enemy
+		apply_friction(acceleration)
+		# Shoot at the player if the gun is reloaded and we can see the them
+		if reloaded && distance.length() <= SIGHT_DISTANCE:
+			shoot()
 	
-	# Update the Player's motion using the move_and_slide function.
-	# Godot's built in move_and_slide function will cause the Player to slide
+	# Point the Enemy toward the Player
+	look_at(PLAYER.position)
+	
+	# Update the Enemy's motion using the move_and_slide function.
+	# Godot's built in move_and_slide function will cause the Enemy to slide
 	# instead of abruptly stopping when it collides with something
 	motion = move_and_slide(motion)
 
-# This function checks which buttons the player is pressing so we know which 
-# direction they want to go
-func get_move_direction():
-	# Start with a 2D vector of (0,0)
-	var direction = Vector2.ZERO
-	# Set the x value of the direction vector based on the left and right 
-	# buttons being pressed. The Input.is_action_pressed function returns true 
-	# or false, which we can turn into 1 or 0 by changing it into an integer
-	# with the int function. 
-	#
-	# So if the right button is pressed (true = 1) and left button is not 
-	# (false = 0) we get direction.x = 1 - 0 which is 1.
-	#
-	# This works because of the coordinate system used by godot, which looks 
-	# like this:
-	#
-	#						   (-1,-1)  |   (1,-1)
-	#						            |    
-	#						   ---------0---------
-	#						            |
-	#						   (-1,1)   |   (1,1)
-	#
-	# Negative y values are above the x-axis, and positive y values are below the 
-	# x axis. While x values are more like you're used to from math class, where
-	# positive x values are to the right of the y-axis and negative x values are
-	# to the left of the y-axis
-	direction.x = int(Input.is_action_pressed("right")) - int(Input.is_action_pressed("left"))
-	direction.y = int(Input.is_action_pressed("down")) - int(Input.is_action_pressed("up"))
-	
-	# When we return the value, we normalize it so that the vector length is 
-	# always 1, if we don't do this the player would actually more faster on
-	# angles because the position (1,1) is actually further away from (0,0) than
-	# (0,1) is.
-	return direction.normalized()
-
-# Slow the player down at a steady rate, this helps prevent jerky movement
+# Slow the Enemy down at a steady rate, this helps prevent jerky movement
 func apply_friction(deceleration):
-	# If the player is moving faster than how much we want to slow them down by...
+	# If the Enemy is moving faster than how much we want to slow them down by...
 	if motion.length() > deceleration:
 		# ... slow them down
 		motion -= motion.normalized() * deceleration
 	else:# Otherwise...
 		# ... set their movement to zero, since we don't want to send them backwards
 		motion = Vector2.ZERO
-		# and set the Player's animation back to idle
+		# and set the Enemy's animation back to idle
 		ANIMATION_PLAYER.play("idle")
 
-# Apply acceleration to the player
+# Apply acceleration to the Enemy
 func apply_movement(acceleration):
-	# Add the acceleration we figured out to the player's current motion
+	# Add the acceleration we figured out to the Enemy's current motion
 	motion += acceleration
 	# Then use Godot's clamped function to make sure they aren't moving faster
 	# than our MAX_SPEED constant
 	motion = motion.clamped(MAX_SPEED)
+
+# Since we have 4 different enemy sprites, let's assign a random sprite to
+# this Enemy instance
+func set_sprite():
+	# Initialize the random number generator
+	randomize()
+	# Pick a random integer, then give us it's value mod 4. The Mod or Modulus 
+	# operator % will return the remainder from division. So, by using mod 4 on
+	# a random integer, we will always have a remainder of 0, 1, 2, or 3
+	var type = randi() % 4
+	# Set the texture to the randomly selected sprite sheet
+	$Sprite.texture = load(SPRITE_SHEETS[type])
 
 # Shoot a bullet out of the gun
 func shoot():

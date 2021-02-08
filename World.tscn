@@ -1,12 +1,13 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://topdown-sprites.png" type="Texture" id=2]
+[ext_resource path="res://Enemy.tscn" type="PackedScene" id=3]
 
-[sub_resource type="RectangleShape2D" id=8]
+[sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 10, 321.628 )
 
-[sub_resource type="TileSet" id=7]
+[sub_resource type="TileSet" id=2]
 0/name = "topdown-sprites.png 0"
 0/texture = ExtResource( 2 )
 0/tex_offset = Vector2( 0, 0 )
@@ -22,22 +23,22 @@ extents = Vector2( 10, 321.628 )
 0/shapes = [  ]
 0/z_index = 0
 
-[sub_resource type="OccluderPolygon2D" id=1]
+[sub_resource type="OccluderPolygon2D" id=3]
 polygon = PoolVector2Array( 53.3909, 49.9757, 28.7613, 1.79319, 0.0940971, 1.52402, 0, 63.7036, 53.2563, 64 )
 
-[sub_resource type="ConvexPolygonShape2D" id=2]
+[sub_resource type="ConvexPolygonShape2D" id=4]
 points = PoolVector2Array( 0, 49.7065, 53.5255, 49.7065, 53.5255, 64, 0, 64 )
 
-[sub_resource type="ConvexPolygonShape2D" id=3]
+[sub_resource type="ConvexPolygonShape2D" id=5]
 points = PoolVector2Array( 53.3909, 64, 0, 64, 0, 0.0260544, 53.3909, 0.0260544 )
 
-[sub_resource type="ConvexPolygonShape2D" id=4]
+[sub_resource type="ConvexPolygonShape2D" id=6]
 points = PoolVector2Array( 53.7947, 64, 0, 64, 0, 0, 53.7947, 0 )
 
-[sub_resource type="ConvexPolygonShape2D" id=5]
+[sub_resource type="ConvexPolygonShape2D" id=7]
 points = PoolVector2Array( 53.7947, 64, 0, 64, 0, 0, 53.7947, 0 )
 
-[sub_resource type="TileSet" id=6]
+[sub_resource type="TileSet" id=8]
 0/name = "topdown-sprites.png 0"
 0/texture = ExtResource( 2 )
 0/tex_offset = Vector2( 0, 0 )
@@ -45,18 +46,18 @@ points = PoolVector2Array( 53.7947, 64, 0, 64, 0, 0, 53.7947, 0 )
 0/region = Rect2( 0, 0, 64, 64 )
 0/tile_mode = 0
 0/occluder_offset = Vector2( 0, 0 )
-0/occluder = SubResource( 1 )
+0/occluder = SubResource( 3 )
 0/navigation_offset = Vector2( 0, 0 )
 0/shape_offset = Vector2( 0, 0 )
 0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
-0/shape = SubResource( 2 )
+0/shape = SubResource( 4 )
 0/shape_one_way = false
 0/shape_one_way_margin = 1.0
 0/shapes = [ {
 "autotile_coord": Vector2( 0, 0 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 2 ),
+"shape": SubResource( 4 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 } ]
 0/z_index = 0
@@ -70,14 +71,14 @@ points = PoolVector2Array( 53.7947, 64, 0, 64, 0, 0, 53.7947, 0 )
 1/navigation_offset = Vector2( 0, 0 )
 1/shape_offset = Vector2( 0, 0 )
 1/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
-1/shape = SubResource( 3 )
+1/shape = SubResource( 5 )
 1/shape_one_way = false
 1/shape_one_way_margin = 1.0
 1/shapes = [ {
 "autotile_coord": Vector2( 0, 0 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 3 ),
+"shape": SubResource( 5 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 } ]
 1/z_index = 0
@@ -91,14 +92,14 @@ points = PoolVector2Array( 53.7947, 64, 0, 64, 0, 0, 53.7947, 0 )
 2/navigation_offset = Vector2( 0, 0 )
 2/shape_offset = Vector2( 0, 0 )
 2/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
-2/shape = SubResource( 4 )
+2/shape = SubResource( 6 )
 2/shape_one_way = false
 2/shape_one_way_margin = 1.0
 2/shapes = [ {
 "autotile_coord": Vector2( 0, 0 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 4 ),
+"shape": SubResource( 6 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 } ]
 2/z_index = 0
@@ -112,14 +113,14 @@ points = PoolVector2Array( 53.7947, 64, 0, 64, 0, 0, 53.7947, 0 )
 3/navigation_offset = Vector2( 0, 0 )
 3/shape_offset = Vector2( 0, 0 )
 3/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
-3/shape = SubResource( 5 )
+3/shape = SubResource( 7 )
 3/shape_one_way = false
 3/shape_one_way_margin = 1.0
 3/shapes = [ {
 "autotile_coord": Vector2( 0, 0 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 5 ),
+"shape": SubResource( 7 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 } ]
 3/z_index = 0
@@ -130,19 +131,22 @@ points = PoolVector2Array( 53.7947, 64, 0, 64, 0, 0, 53.7947, 0 )
 
 [node name="Right" type="CollisionShape2D" parent="Bounds"]
 position = Vector2( 266.376, 291.219 )
-shape = SubResource( 8 )
+shape = SubResource( 1 )
 
 [node name="Left" type="CollisionShape2D" parent="Bounds"]
 position = Vector2( -11.0415, 298.12 )
-shape = SubResource( 8 )
+shape = SubResource( 1 )
 
 [node name="Street" type="TileMap" parent="."]
-tile_set = SubResource( 7 )
+tile_set = SubResource( 2 )
 cell_quadrant_size = 64
 format = 1
 tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 65536, 0, 0, 65537, 0, 0, 65538, 0, 0, 65539, 0, 0, 131072, 0, 0, 131073, 0, 0, 131074, 0, 0, 131075, 0, 0, 196608, 0, 0, 196609, 0, 0, 196610, 0, 0, 196611, 0, 0, 262144, 0, 0, 262145, 0, 0, 262146, 0, 0, 262147, 0, 0, 327680, 0, 0, 327681, 0, 0, 327682, 0, 0, 327683, 0, 0, 393216, 0, 0, 393217, 0, 0, 393218, 0, 0, 393219, 0, 0, 458752, 0, 0, 458753, 0, 0, 458754, 0, 0, 458755, 0, 0, 524288, 0, 0, 524289, 0, 0, 524290, 0, 0, 524291, 0, 0 )
 
 [node name="YSort" type="YSort" parent="."]
+
+[node name="Enemy" parent="YSort" instance=ExtResource( 3 )]
+position = Vector2( 132.498, 165.622 )
 
 [node name="Player" parent="YSort" instance=ExtResource( 1 )]
 position = Vector2( 149, 250 )
@@ -153,7 +157,7 @@ limit_left = 0
 limit_right = 256
 
 [node name="Buildings" type="TileMap" parent="YSort"]
-tile_set = SubResource( 6 )
+tile_set = SubResource( 8 )
 cell_quadrant_size = 64
 cell_tile_origin = 2
 cell_y_sort = true
