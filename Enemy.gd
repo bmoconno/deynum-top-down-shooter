@@ -16,6 +16,8 @@ const BULLET_SPEED = 150
 const BULLET = preload("res://Bullet.tscn")
 # A reference to the GunBlast scene, so we can make new instances of it
 const GUN_BLAST = preload("res://GunBlast.tscn")
+# A refernece to the Blood scene, so we can make new instances of it
+const BLOOD = preload("res://Blood.tscn")
 # The AnimationPlayer node for Enemy, onready means it doesn't set this until 
 # Godot's built in _ready function runs for this Enemy node
 onready var ANIMATION_PLAYER = $AnimationPlayer
@@ -36,12 +38,16 @@ const SPRITE_SHEETS = ["res://enemy-1-sprites.png", "res://enemy-2-sprites.png",
 var motion = Vector2()
 # Is the gun ready to fire?
 var reloaded = true
+# How much health the enemy has
+var health = 100
 
 # This function is buily into Godot, it is called when the Node is loaded into
 # the scene
 func _ready():
 	# Set the random sprite for this enemy
 	set_sprite()
+	# Set the group to Enemy so we know this is an Enemy
+	add_to_group("Enemy")
 
 # This function is built into Godot, it is called every physics frame
 func _physics_process(delta):
@@ -127,6 +133,10 @@ func shoot():
 	# direction we want, then we rotate that by the Player's rotation so it comes
 	# out the right direction
 	bullet.apply_impulse(Vector2.ZERO, Vector2(BULLET_SPEED, 0).rotated(rotation))
+	# Set the group to the bullet to Enemy so it doesn't kill other Enemies
+	bullet.add_to_group("Enemy")
+	# Set the damage of the bullet
+	bullet.set_damage(3)
 	# Use built in Godot functions to get the parent node (YSort), then add
 	# our new bullet instance to it.
 	get_parent().call_deferred("add_child", bullet)
@@ -146,3 +156,26 @@ func shoot():
 	# Now that we've waited for FIRE_RATE seconds, the gun is reloaded and can
 	# shoot again
 	reloaded = true
+
+func death():
+	print("Dead!")
+	queue_free()
+
+func take_damage(damage):
+	print("Enemy took " + String(damage) + " damage")
+	health -= damage
+	print(health)
+	
+	var blood = BLOOD.instance()
+	blood.position = get_global_position()
+	if health <= 0:
+		blood.set_type("SPLATTER")
+		get_parent().get_node("Blood").call_deferred("add_child", blood)
+		#get_tree().get_root().call_deferred("add_child", blood)
+		#get_parent().call_deferred("add_child", blood)
+		death()
+	else:
+		blood.set_type("DROPS")
+		get_parent().get_node("Blood").call_deferred("add_child", blood)
+		#get_tree().get_root().call_deferred("add_child", blood)
+		#get_parent().call_deferred("add_child", blood)

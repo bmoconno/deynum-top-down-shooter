@@ -45,7 +45,9 @@ tracks/0/keys = {
 [node name="Player" type="KinematicBody2D"]
 script = ExtResource( 2 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=[
+"Player",
+]]
 shape = SubResource( 1 )
 
 [node name="Gun" type="Node2D" parent="."]
@@ -57,12 +59,13 @@ rotation = 1.5708
 texture = ExtResource( 1 )
 vframes = 4
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="HitBox" type="Area2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
 shape = SubResource( 2 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "idle"
 anims/idle = SubResource( 3 )
 anims/move = SubResource( 4 )
+[connection signal="body_entered" from="HitBox" to="." method="_on_HitBox_body_entered"]

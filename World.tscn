@@ -146,6 +146,8 @@ tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 65536, 0, 0, 65537
 
 [node name="YSort" type="YSort" parent="."]
 
+[node name="Blood" type="Node2D" parent="YSort"]
+
 [node name="Enemy" parent="YSort" instance=ExtResource( 3 )]
 position = Vector2( 132.498, 165.622 )
 

@@ -15,6 +15,8 @@ const BULLET_SPEED = 300
 const BULLET = preload("res://Bullet.tscn")
 # A reference to the GunBlast scene, so we can make new instances of it
 const GUN_BLAST = preload("res://GunBlast.tscn")
+# A refernece to the Blood scene, so we can make new instances of it
+const BLOOD = preload("res://Blood.tscn")
 # The AnimationPlayer node for Player, onready means it doesn't set this until 
 # Godot's built in _ready function runs for this Player node
 onready var ANIMATION_PLAYER = $AnimationPlayer
@@ -27,6 +29,11 @@ onready var ANIMATION_PLAYER = $AnimationPlayer
 var motion = Vector2()
 # Is the gun ready to fire?
 var reloaded = true
+# How much the health the player has
+var health = 100.0
+# Difficuly will be used to increase damage received, each difficulty level
+# increases damage taken by the player by 1/3
+var difficulty = 0
 
 # This function is built into Godot, it is called every frame
 func _process(delta):
@@ -138,6 +145,11 @@ func shoot():
 	# direction we want, then we rotate that by the Player's rotation so it comes
 	# out the right direction
 	bullet.apply_impulse(Vector2.ZERO, Vector2(BULLET_SPEED, 0).rotated(rotation))
+	# Set the group for our bullet so the Player can't shoot themselves
+	bullet.add_to_group("Player")
+	# Set the damage for the bullet, this will later be modified by power ups
+	# and guns and stuff
+	bullet.set_damage(50)
 	# Use built in Godot functions to get the parent node (YSort), then add
 	# our new bullet instance to it.
 	get_parent().call_deferred("add_child", bullet)
@@ -157,3 +169,37 @@ func shoot():
 	# Now that we've waited for FIRE_RATE seconds, the gun is reloaded and can
 	# shoot again
 	reloaded = true
+
+# Called when the Player's health gets below 0
+func death():
+	print("Dead!")
+	# Handle death here, menu/continue screen?
+	pass
+
+# Called when something hits the Player
+func take_damage(damage):
+	# Modify the damage based on difficulty level
+	var incoming = damage + float((1.0/3) * difficulty * damage)
+	print("Player took " + String(incoming) + " damage")
+	print(health)
+	# Remove the modified damage from the Player's health
+	health -= incoming
+	# If the Player's health is blow 0, they die
+	var blood = BLOOD.instance()
+	blood.position = get_global_position()
+	if health <= 0:
+		blood.set_type("SPLATTER")
+		get_parent().get_node("Blood").call_deferred("add_child", blood)
+		#get_tree().get_root().call_deferred("add_child", blood)
+		#get_parent().call_deferred("add_child", blood)
+		death()
+	else:
+		blood.set_type("DROPS")
+		#get_tree().get_root().call_deferred("add_child", blood)
+		#get_parent().call_deferred("add_child", blood)
+		get_parent().get_node("Blood").call_deferred("add_child", blood)
+
+# The player has been hit... might not use this
+func _on_HitBox_body_entered(body):
+	
+	pass # Replace with function body.
