@@ -172,7 +172,6 @@ func shoot():
 
 # Called when the Player's health gets below 0
 func death():
-	print("Dead!")
 	# Handle death here, menu/continue screen?
 	pass
 
@@ -180,23 +179,24 @@ func death():
 func take_damage(damage):
 	# Modify the damage based on difficulty level
 	var incoming = damage + float((1.0/3) * difficulty * damage)
-	print("Player took " + String(incoming) + " damage")
-	print(health)
 	# Remove the modified damage from the Player's health
 	health -= incoming
-	# If the Player's health is blow 0, they die
+	# Make a new instance of Blood
 	var blood = BLOOD.instance()
+	# Set the position of blood to the global position of the Player
 	blood.position = get_global_position()
+	# If the Player's health is blow 0, they die
 	if health <= 0:
+		# Set the blood type to SPLATTER so we get a lot blood on the ground
 		blood.set_type("SPLATTER")
+		# Add the blood to the scene's Blood node so it YSorts below the Player
 		get_parent().get_node("Blood").call_deferred("add_child", blood)
-		#get_tree().get_root().call_deferred("add_child", blood)
-		#get_parent().call_deferred("add_child", blood)
+		# Call the Player's death function
 		death()
 	else:
+		# Set the blood type to DROPS so we get a little blood on the ground
 		blood.set_type("DROPS")
-		#get_tree().get_root().call_deferred("add_child", blood)
-		#get_parent().call_deferred("add_child", blood)
+		# Add the blood to the scene's Blood node so it YSorts below the Player
 		get_parent().get_node("Blood").call_deferred("add_child", blood)
 
 # The player has been hit... might not use this

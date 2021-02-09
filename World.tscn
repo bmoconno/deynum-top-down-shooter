@@ -167,6 +167,9 @@ cell_y_sort = true
 format = 1
 tile_data = PoolIntArray( 0, 0, 0, 3, 536870912, 0, 65536, 1, 0, 65539, 536870914, 0, 131072, 1, 0, 131075, 536870913, 0, 196608, 2, 0, 196611, 536870913, 0, 262144, 2, 0, 262147, 536870914, 0, 327680, 3, 0, 327683, 536870913, 0, 393216, 0, 0, 393219, 536870914, 0, 458752, 2, 0, 458755, 536870915, 0, 524288, 2, 0 )
 
-[node name="EnemySpawner" parent="." instance=ExtResource( 4 )]
+[node name="EnemySpawnerLeft" parent="." instance=ExtResource( 4 )]
 position = Vector2( 0, 64 )
-frame = 0
+side = "left"
+
+[node name="EnemySpawnerRight" parent="." instance=ExtResource( 4 )]
+position = Vector2( 192, 128 )

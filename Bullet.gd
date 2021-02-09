@@ -1,5 +1,9 @@
 extends RigidBody2D
 
+#######################################
+# Variable - these values do change
+#######################################
+
 var damage = 1
 
 # This function is attached to the signal from VisibilityNotifier2D on the Bullet
@@ -14,12 +18,11 @@ func _on_Bullet_body_entered(body):
 	# Eventually we'll check here to see if it hit a bad guy or something
 	if "Player" in body.name && !"Player" in get_groups():
 		body.take_damage(damage)
-		print("Hit Player")
 	elif "Enemy" in body.name && !"Enemy" in get_groups():
 		body.take_damage(damage)
-		print("Hit Enemy")
 	# The bullet hit something, remove it from memory
 	queue_free()
 
+# Set the damage for this Bullet
 func set_damage(damage):
 	self.damage = damage

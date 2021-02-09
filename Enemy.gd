@@ -157,25 +157,30 @@ func shoot():
 	# shoot again
 	reloaded = true
 
+# This is called when the Enemy's health is below 0
 func death():
-	print("Dead!")
+	# Remove the dead Enemy from the scene
 	queue_free()
 
+# This is called when a Player's Bullet hits the Enemy
 func take_damage(damage):
-	print("Enemy took " + String(damage) + " damage")
+	# Lower the Enemy's health by the damage amount
 	health -= damage
-	print(health)
 	
+	# Make a new instance of Blood
 	var blood = BLOOD.instance()
+	# Set the position of blood to the global position of the Enemy
 	blood.position = get_global_position()
+	# If the Enemy's health is below 0, they're dead
 	if health <= 0:
+		# Set the blood type to SPLATTER so we get a lot of blood on the ground
 		blood.set_type("SPLATTER")
+		# Add the blood to the scene's Blood node so it YSorts below the Enemy
 		get_parent().get_node("Blood").call_deferred("add_child", blood)
-		#get_tree().get_root().call_deferred("add_child", blood)
-		#get_parent().call_deferred("add_child", blood)
+		# Call the Enemy death function
 		death()
 	else:
+		# Set the blood type to DROPS so we get a little bit of blood
 		blood.set_type("DROPS")
+		# Add the blood to the scene's Blood node so it YSorts below the Enemy
 		get_parent().get_node("Blood").call_deferred("add_child", blood)
-		#get_tree().get_root().call_deferred("add_child", blood)
-		#get_parent().call_deferred("add_child", blood)

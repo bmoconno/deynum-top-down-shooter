@@ -13,17 +13,35 @@ onready var YSORT = get_parent().get_node("YSort")
 const SPAWN_DISTANCE = 80
 # How many seconds between Enemies spawns
 const SPAWN_RATE = 1
+# Offset for the Spawn node, used when the EnemySpawner flipped
+const OFFSET = 56
+
 
 #######################################
 # Variable - these values do change
 #######################################
 
+# Is an Enemy spawning right now? This will prevent us from spawning all the
+# Enemies at once
 var spawning = false
 
 #######################################
 # Exports - these values can be set in the inspector
 #######################################
+
+# How many enemies are inside the spawner?
 export var enemy_count = 5
+# Which side of the street is the spawner on?
+export (String, "left", "right") var side
+
+# This function is built into Godot, it is called when the node enters the scene
+func _ready():
+	# If the "Side" in the inspector is set to right, flip the sprite
+	if side == "right":
+		flip_h = true
+	else: # Otherwise...
+		# ... offset the Spawn node so Enemies appear on the street
+		$Spawn.position.x += OFFSET
 
 # This function is built into Godot, it is called every frame
 func _process(delta):
