@@ -171,6 +171,8 @@ func take_damage(damage):
 	var blood = BLOOD.instance()
 	# Set the position of blood to the global position of the Enemy
 	blood.position = get_global_position()
+	# Set the roation of the blood to match the Enemy so it looks less uniform
+	blood.rotation_degrees = rotation_degrees
 	# If the Enemy's health is below 0, they're dead
 	if health <= 0:
 		# Set the blood type to SPLATTER so we get a lot of blood on the ground
