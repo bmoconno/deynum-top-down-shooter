@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://topdown-sprites.png" type="Texture" id=2]
@@ -9,7 +9,7 @@
 extents = Vector2( 10, 321.628 )
 
 [sub_resource type="TileSet" id=2]
-0/name = "topdown-sprites.png 0"
+0/name = "street with 2 alley"
 0/texture = ExtResource( 2 )
 0/tex_offset = Vector2( 0, 0 )
 0/modulate = Color( 1, 1, 1, 1 )
@@ -23,6 +23,64 @@ extents = Vector2( 10, 321.628 )
 0/shape_one_way_margin = 0.0
 0/shapes = [  ]
 0/z_index = 0
+1/name = "street"
+1/texture = ExtResource( 2 )
+1/tex_offset = Vector2( 0, 0 )
+1/modulate = Color( 1, 1, 1, 1 )
+1/region = Rect2( 64, 64, 64, 64 )
+1/tile_mode = 0
+1/occluder_offset = Vector2( 0, 0 )
+1/navigation_offset = Vector2( 0, 0 )
+1/shape_offset = Vector2( 0, 0 )
+1/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+1/shape_one_way = false
+1/shape_one_way_margin = 0.0
+1/shapes = [  ]
+1/z_index = 0
+2/name = "street with 1 alley"
+2/texture = ExtResource( 2 )
+2/tex_offset = Vector2( 0, 0 )
+2/modulate = Color( 1, 1, 1, 1 )
+2/region = Rect2( 64, 128, 64, 64 )
+2/tile_mode = 0
+2/occluder_offset = Vector2( 0, 0 )
+2/navigation_offset = Vector2( 0, 0 )
+2/shape_offset = Vector2( 0, 0 )
+2/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+2/shape_one_way = false
+2/shape_one_way_margin = 0.0
+2/shapes = [  ]
+2/z_index = 0
+
+[sub_resource type="TileSet" id=9]
+0/name = "sidewalk with alley"
+0/texture = ExtResource( 2 )
+0/tex_offset = Vector2( 0, 0 )
+0/modulate = Color( 1, 1, 1, 1 )
+0/region = Rect2( 128, 0, 64, 64 )
+0/tile_mode = 0
+0/occluder_offset = Vector2( 0, 0 )
+0/navigation_offset = Vector2( 0, 0 )
+0/shape_offset = Vector2( 0, 0 )
+0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+0/shape_one_way = false
+0/shape_one_way_margin = 0.0
+0/shapes = [  ]
+0/z_index = 0
+1/name = "sidewalk"
+1/texture = ExtResource( 2 )
+1/tex_offset = Vector2( 0, 0 )
+1/modulate = Color( 1, 1, 1, 1 )
+1/region = Rect2( 128, 64, 64, 64 )
+1/tile_mode = 0
+1/occluder_offset = Vector2( 0, 0 )
+1/navigation_offset = Vector2( 0, 0 )
+1/shape_offset = Vector2( 0, 0 )
+1/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+1/shape_one_way = false
+1/shape_one_way_margin = 0.0
+1/shapes = [  ]
+1/z_index = 0
 
 [sub_resource type="OccluderPolygon2D" id=3]
 polygon = PoolVector2Array( 53.3909, 49.9757, 28.7613, 1.79319, 0.0940971, 1.52402, 0, 63.7036, 53.2563, 64 )
@@ -142,7 +200,12 @@ shape = SubResource( 1 )
 tile_set = SubResource( 2 )
 cell_quadrant_size = 64
 format = 1
-tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 65536, 0, 0, 65537, 0, 0, 65538, 0, 0, 65539, 0, 0, 131072, 0, 0, 131073, 0, 0, 131074, 0, 0, 131075, 0, 0, 196608, 0, 0, 196609, 0, 0, 196610, 0, 0, 196611, 0, 0, 262144, 0, 0, 262145, 0, 0, 262146, 0, 0, 262147, 0, 0, 327680, 0, 0, 327681, 0, 0, 327682, 0, 0, 327683, 0, 0, 393216, 0, 0, 393217, 0, 0, 393218, 0, 0, 393219, 0, 0, 458752, 0, 0, 458753, 0, 0, 458754, 0, 0, 458755, 0, 0, 524288, 0, 0, 524289, 0, 0, 524290, 0, 0, 524291, 0, 0 )
+tile_data = PoolIntArray( 1, 0, 0, 65537, 536870913, 0, 131073, 536870913, 0, 196609, 536870913, 0, 262145, 536870913, 0, 327681, 536870913, 0, 393217, 2, 0, 458753, 536870913, 0, 524289, 536870914, 0 )
+
+[node name="Sidewalk" type="TileMap" parent="Street"]
+tile_set = SubResource( 9 )
+format = 1
+tile_data = PoolIntArray( 0, 0, 0, 2, 536870912, 0, 65536, 1073741825, 0, 65538, 1610612737, 0, 131072, 1073741825, 0, 131074, 1610612737, 0, 196608, 1073741825, 0, 196610, 1610612737, 0, 262144, 1073741825, 0, 262146, 1610612737, 0, 327680, 1073741825, 0, 327682, 1610612737, 0, 393216, 0, 0, 393218, 1610612737, 0, 458752, 1073741825, 0, 458754, 1610612737, 0, 524288, 1073741825, 0, 524290, 536870912, 0 )
 
 [node name="YSort" type="YSort" parent="."]
 
@@ -152,12 +215,12 @@ tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 65536, 0, 0, 65537
 position = Vector2( 132.498, 165.622 )
 
 [node name="Player" parent="YSort" instance=ExtResource( 1 )]
-position = Vector2( 149, 250 )
+position = Vector2( 100, 250 )
 
 [node name="Camera2D" type="Camera2D" parent="YSort/Player"]
 current = true
 limit_left = 0
-limit_right = 256
+limit_right = 192
 
 [node name="Buildings" type="TileMap" parent="YSort"]
 tile_set = SubResource( 8 )
@@ -165,11 +228,11 @@ cell_quadrant_size = 64
 cell_tile_origin = 2
 cell_y_sort = true
 format = 1
-tile_data = PoolIntArray( 0, 0, 0, 3, 536870912, 0, 65536, 1, 0, 65539, 536870914, 0, 131072, 1, 0, 131075, 536870913, 0, 196608, 2, 0, 196611, 536870913, 0, 262144, 2, 0, 262147, 536870914, 0, 327680, 3, 0, 327683, 536870913, 0, 393216, 0, 0, 393219, 536870914, 0, 458752, 2, 0, 458755, 536870915, 0, 524288, 2, 0 )
+tile_data = PoolIntArray( 0, 0, 0, 2, 536870912, 0, 65536, 1, 0, 65538, 536870914, 0, 131072, 1, 0, 131074, 536870913, 0, 196608, 2, 0, 196610, 536870913, 0, 262144, 2, 0, 262146, 536870914, 0, 327680, 3, 0, 327682, 536870913, 0, 393216, 0, 0, 393218, 536870914, 0, 458752, 2, 0, 458754, 536870915, 0, 524288, 2, 0 )
 
 [node name="EnemySpawnerLeft" parent="." instance=ExtResource( 4 )]
 position = Vector2( 0, 64 )
 side = "left"
 
 [node name="EnemySpawnerRight" parent="." instance=ExtResource( 4 )]
-position = Vector2( 192, 128 )
+position = Vector2( 128, 128 )
