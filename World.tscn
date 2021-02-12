@@ -1,9 +1,10 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://topdown-sprites.png" type="Texture" id=2]
 [ext_resource path="res://Enemy.tscn" type="PackedScene" id=3]
 [ext_resource path="res://EnemySpawner.tscn" type="PackedScene" id=4]
+[ext_resource path="res://street-objects/Car.tscn" type="PackedScene" id=5]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 10, 321.628 )
@@ -189,7 +190,7 @@ points = PoolVector2Array( 53.7947, 64, 0, 64, 0, 0, 53.7947, 0 )
 [node name="Bounds" type="StaticBody2D" parent="."]
 
 [node name="Right" type="CollisionShape2D" parent="Bounds"]
-position = Vector2( 266.376, 291.219 )
+position = Vector2( 201.895, 289.216 )
 shape = SubResource( 1 )
 
 [node name="Left" type="CollisionShape2D" parent="Bounds"]
@@ -236,3 +237,6 @@ side = "left"
 
 [node name="EnemySpawnerRight" parent="." instance=ExtResource( 4 )]
 position = Vector2( 128, 128 )
+
+[node name="Car" parent="." instance=ExtResource( 5 )]
+position = Vector2( 112.881, 408.754 )
