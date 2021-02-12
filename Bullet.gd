@@ -20,6 +20,8 @@ func _on_Bullet_body_entered(body):
 		body.take_damage(damage)
 	elif "Enemy" in body.name && !"Enemy" in get_groups():
 		body.take_damage(damage)
+	elif "Destructible" in body.get_groups():
+		body.take_damage(damage)
 	# The bullet hit something, remove it from memory
 	queue_free()
 
